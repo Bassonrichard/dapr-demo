@@ -1,0 +1,90 @@
+version: '3.4'
+
+services:
+  ############################
+  # daprtestclient
+  ############################
+  daprtestclient:
+    depends_on: [redis, placement]
+    container_name: daprtestclient
+    image: daprtestclient
+    build:
+      context: ./daprtestclient/
+    ports:
+        - "5103:80"
+        - "50001:50001"
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+
+  ############################
+  # daprtestclient sidecar
+  ############################
+  daprtestclient-dapr:
+    image: "daprio/daprd:1.7.2"
+    network_mode: "service:daprtestclient"
+    depends_on:
+      - daprtestclient
+    command: [
+    "./daprd",
+    "--app-id", "daprtestclient",
+    "--app-port", "80",
+    "--components-path", "/components",
+    "--placement-host-address", "placement:50000"
+    ]
+    volumes:
+    - "./components-docker/:/components"
+
+  ############################
+  # daprtestserver
+  ############################
+  daprtestserver:
+    depends_on: [redis, placement]
+    container_name: daprtestserver
+    image: daprtestclient
+    build:
+      context: ./daprtestserver/
+    ports:
+      - 3000:80
+      - 51000:50001
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+
+  ############################
+  # daprtestserver sidecar
+  ############################
+  daprtestserver-dapr:
+    image: "daprio/daprd:1.7.2"
+    network_mode: "service:daprtestserver"
+    depends_on:
+        - daprtestserver
+    command: [
+    "./daprd",
+    "--app-id", "daprtestserver",
+    "--app-port", "80",
+    "--components-path", "/components",
+    "--placement-host-address", "placement:50000"
+    ]
+    volumes:
+    - "./components-docker/:/components"
+
+
+  ############################
+  # Dapr placement service
+  ############################
+  placement:
+    image: "daprio/dapr"
+    container_name: 'placement' 
+    ports:
+      - 50000:50000
+    command: ["./placement", "-port", "50000", "-log-level", "debug"]
+
+  ############################
+  # Redis state store
+  ############################
+  redis:
+    image: "redis:alpine"
+    container_name: 'redis'
+    ports:
+      - 6379:6379
