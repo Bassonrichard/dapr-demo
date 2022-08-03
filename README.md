@@ -69,5 +69,9 @@ You can now after following the above steps rung the services in debug mode.
 
 ## Service flow
 
+  * daprtestclient[GetWeatherForecast] -> redis -> daprtestserver[weatherforecast]
+  * daprtestclient[PostWeatherForecast] -> redis
+  * daprtestclient[PublishWeatherForecast] -> redis -> daprtestserver[forecast]
+
 ![Dapr overview](./docs/service_flow_redis.png)
 
