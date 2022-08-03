@@ -1,7 +1,12 @@
 # DarpDemo
 -------
 Demo repo to showcase some darp functionality 
-more information can be found on : https://docs.dapr.io/
+more information can be found on : https://dapr.io/
+
+## Resources:
+* Dapr docs: `https://docs.dapr.io/`
+* .NET docs: `https://docs.microsoft.com/en-us/dotnet/architecture/dapr-for-net-developers/`
+* eShopOnDapr: `https://github.com/dotnet-architecture/eShopOnDapr`
 
 ## Quick Installation Guide
 
