@@ -1,4 +1,4 @@
-# DaprDemo
+# Dapr Demo
 -------
 Demo repo to showcase some dapr functionality 
 more information can be found on : https://dapr.io/
@@ -35,8 +35,18 @@ more information can be found on : https://dapr.io/
     ```
      daprd --app-id daprtestserver --components-path ../components/ --app-port 5008 --dapr-grpc-port 50002 --dapr-http-port 3501
     ```
+    You can now after following the above steps rung the services in debug mode.
+    ### Docker version
 
-You can now after following the above steps rung the services in debug mode.
+    * Naviate to the root project directory
+    * Run `docker-compose up -d`
+
+
+    Taking services down:
+      Run `docker-compose down`
+
+
+
 
 ## Service flow
 
