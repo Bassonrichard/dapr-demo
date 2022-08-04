@@ -1,6 +1,6 @@
-# DarpDemo
+# DaprDemo
 -------
-Demo repo to showcase some darp functionality 
+Demo repo to showcase some dapr functionality 
 more information can be found on : https://dapr.io/
 
 ## Resources:
