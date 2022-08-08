@@ -38,15 +38,21 @@ more information can be found on : https://dapr.io/
     You can now after following the above steps rung the services in debug mode.
     ### Docker version
 
-    * Naviate to the root project directory
+    #### Redis
+    * Navigate to the root project directory
     * Run `docker-compose up -d`
 
 
     Taking services down:
       Run `docker-compose down`
 
+    #### AWS SQS/SNS and DynamoDB
+    * Navigate to the root project directory
+    * Run `docker-compose -f docker-compose.localstack.yml up -d`
 
 
+    Taking services down:
+      Run `docker-compose -f docker-compose.localstack.yml down`
 
 ## Service flow
 
