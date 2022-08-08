@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "daprtestclient": {
+    "daprtestserviceone": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

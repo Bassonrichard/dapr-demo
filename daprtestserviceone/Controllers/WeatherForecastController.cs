@@ -2,7 +2,7 @@ using Dapr;
 using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
 
-namespace daprtestclient.Controllers
+namespace daprtestserviceone.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -26,14 +26,14 @@ namespace daprtestclient.Controllers
             {
                 try
                 {
-                    forecastState.Value = await _daprClient.InvokeMethodAsync<string, IEnumerable<WeatherForecast>>("daprtestserver", "weatherforecast", city);
+                    forecastState.Value = await _daprClient.InvokeMethodAsync<string, IEnumerable<WeatherForecast>>("daprtestservicetwo", "weatherforecast", city);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error while calling daprtestserver weatherforecast");
+                    _logger.LogError(ex, "Error while calling daprtestservicetwo weatherforecast");
                     throw;
                 }
-              
+
             }
 
             return Ok(forecastState.Value);

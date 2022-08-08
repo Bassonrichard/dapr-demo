@@ -1,53 +1,53 @@
 version : '3'
 services:
   ############################
-  # daprtestclient app + Dapr sidecar
+  # daprtestserviceone app + Dapr sidecar
   ############################
-  daprtestclient:
-    image: daprtestclient
+  daprtestserviceone:
+    image: daprtestserviceone
     build:
-      context: ./daprtestserver/
+      context: ./daprtestserviceone/
     ports:
       - "3500:3500"
       - "80:80"
     environment: 
       - ASPNETCORE_ENVIRONMENT=Development
       
-  daprtestclient-dapr:
+  daprtestserviceone-dapr:
     image: "daprio/daprd:edge"
     command: ["./daprd",
-    "-app-id", "daprtestclient",
+    "-app-id", "daprtestserviceone",
     "-app-port", "80",
     "-components-path", "/components",
     "-log-level", "debug"]
     volumes:
-      - "./components-docker/:/components"
+      - "./components/components-docker/:/components"
     depends_on:
-      - daprtestclient
-    network_mode: "service:daprtestclient"
+      - daprtestserviceone
+    network_mode: "service:daprtestserviceone"
 
   ############################
-  # daprtestserver app + Dapr sidecar
+  # daprtestservicetwo app + Dapr sidecar
   ############################
-  daprtestserver:
-    image: daprtestserver
+  daprtestservicetwo:
+    image: daprtestservicetwo
     build:
-      context: ./daprtestserver/
+      context: ./daprtestservicetwo/
     ports:
       - "3501:3501"
       
-  daprtestserver-dapr:
+  daprtestservicetwo-dapr:
     image: "daprio/daprd:edge"
     command: ["./daprd",
-    "-app-id", "daprtestserver",
+    "-app-id", "daprtestservicetwo",
     "-app-port", "80",
     "-components-path", "/components",
     "-log-level", "debug"]
     volumes:
-      - "./components-docker/:/components"
+      - "./components/components-docker/:/components"
     depends_on:
-      - daprtestserver
-    network_mode: "service:daprtestserver"
+      - daprtestservicetwo
+    network_mode: "service:daprtestservicetwo"
     
   redis:
     image: "redis:alpine"

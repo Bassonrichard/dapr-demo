@@ -23,17 +23,17 @@ more information can be found on : https://dapr.io/
    
  * Dapr debug sidecar
     
-    Run the sidecar for the `daprtestclient`:
+    Run the sidecar for the `daprtestserviceone`:
     
     ```
-     daprd --app-id daprtestclient --components-path ../components/  --metrics-port 9091
+     daprd --app-id daprtestserviceone --components-path ../components/components/  --metrics-port 9091
     ```
     
         
-    Run the sidecar for the `daprtestserver`:
+    Run the sidecar for the `daprtestservicetwo`:
     
     ```
-     daprd --app-id daprtestserver --components-path ../components/ --app-port 5008 --dapr-grpc-port 50002 --dapr-http-port 3501
+     daprd --app-id daprtestservicetwo --components-path ../components/components/ --app-port 5008 --dapr-grpc-port 50002 --dapr-http-port 3501
     ```
     You can now after following the above steps rung the services in debug mode.
     ### Docker version
@@ -57,9 +57,9 @@ more information can be found on : https://dapr.io/
 ## Service flow
 
 ### redis
-  * daprtestclient[GetWeatherForecast] -> dapr ->  redis -> dapr -> daprtestserver[weatherforecast]
-  * daprtestclient[PostWeatherForecast] -> dapr ->redis
-  * daprtestclient[PublishWeatherForecast] -> ->redis -> dapr -> daprtestserver[forecast]
+  * daprtestserviceone[GetWeatherForecast] -> dapr ->  redis -> dapr -> daprtestservicetwo[weatherforecast]
+  * daprtestserviceone[PostWeatherForecast] -> dapr ->redis
+  * daprtestserviceone[PublishWeatherForecast] -> ->redis -> dapr -> daprtestservicetwo[forecast]
 
 ![Dapr overview](./docs/service_flow_redis.png)
 

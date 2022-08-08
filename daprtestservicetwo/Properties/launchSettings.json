@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "daprtestserver": {
+    "daprtestservicetwo": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

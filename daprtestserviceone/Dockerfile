@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["daprtestserver.csproj", "."]
-RUN dotnet restore "./daprtestserver.csproj"
+COPY ["daprtestserviceone.csproj", "."]
+RUN dotnet restore "./daprtestserviceone.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "daprtestserver.csproj" -c Release -o /app/build
+RUN dotnet build "daprtestserviceone.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "daprtestserver.csproj" -c Release -o /app/publish
+RUN dotnet publish "daprtestserviceone.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "daprtestserver.dll"]
+ENTRYPOINT ["dotnet", "daprtestserviceone.dll"]
