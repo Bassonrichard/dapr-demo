@@ -1,0 +1,3 @@
+#Set shell files to have a line ending of LF
+*.sh eol=lf
+*.sql eol=lf

@@ -1,0 +1,18 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: statestore
+spec:
+  type: state.aws.dynamodb
+  version: v1
+  metadata:
+  - name: table
+    value: "statestore"
+  - name: accessKey
+    value: "test" # Optional
+  - name: secretKey
+    value: "test" # Optional
+  - name: endpoint
+    value: "http://localstack:4566" # Optional
+  - name: region
+    value: "us-east-1" # Optional

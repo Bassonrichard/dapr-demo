@@ -1,0 +1,16 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: pubsub
+spec:
+  type: pubsub.snssqs
+  version: v1
+  metadata:
+    - name: accessKey
+      value: "test"
+    - name: secretKey
+      value: "test"
+    - name: endpoint
+      value: http://localstack:4566
+    - name: region
+      value: us-east-1

@@ -1,0 +1,56 @@
+version : '3'
+services:
+  ############################
+  # daprtestclient app + Dapr sidecar
+  ############################
+  daprtestclient:
+    image: daprtestclient
+    build:
+      context: ./daprtestserver/
+    ports:
+      - "3500:3500"
+      - "80:80"
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      
+  daprtestclient-dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+    "-app-id", "daprtestclient",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-log-level", "debug"]
+    volumes:
+      - "./components-docker/:/components"
+    depends_on:
+      - daprtestclient
+    network_mode: "service:daprtestclient"
+
+  ############################
+  # daprtestserver app + Dapr sidecar
+  ############################
+  daprtestserver:
+    image: daprtestserver
+    build:
+      context: ./daprtestserver/
+    ports:
+      - "3501:3501"
+      
+  daprtestserver-dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+    "-app-id", "daprtestserver",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-log-level", "debug"]
+    volumes:
+      - "./components-docker/:/components"
+    depends_on:
+      - daprtestserver
+    network_mode: "service:daprtestserver"
+    
+  redis:
+    image: "redis:alpine"
+    hostname: redis
+    ports:
+      - "6379:6379"

@@ -1,0 +1,72 @@
+version : '3'
+services:
+  ############################
+  # daprtestclient app + Dapr sidecar
+  ############################
+  daprtestclient:
+    image: daprtestclient
+    depends_on:
+    - localstack
+    build:
+      context: ./daprtestserver/
+    ports:
+      - "3500:3500"
+      - "80:80"
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+      
+  daprtestclient-dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+    "-app-id", "daprtestclient",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-log-level", "debug"]
+    volumes:
+      - "./components-docker-localstack/:/components"
+    depends_on:
+      - daprtestclient
+    network_mode: "service:daprtestclient"
+
+  ############################
+  # daprtestserver app + Dapr sidecar
+  ############################
+  daprtestserver:
+    image: daprtestserver
+    depends_on:
+      - localstack
+    build:
+      context: ./daprtestserver/
+    ports:
+      - "3501:3501"
+      
+  daprtestserver-dapr:
+    image: "daprio/daprd:edge"
+    command: ["./daprd",
+    "-app-id", "daprtestserver",
+    "-app-port", "80",
+    "-components-path", "/components",
+    "-log-level", "debug"]
+    volumes:
+      - "./components-docker-localstack/:/components"
+    depends_on:
+      - daprtestserver
+    network_mode: "service:daprtestserver"    
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4566-4597:4566-4597' 
+    environment:
+      - SERVICES=sns,sts,sqs,ssm,events,dynamodb
+      - DEBUG=1
+      - AWS_ACCESS_KEY=test
+      - AWS_SECRET_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+      - DEFAULT_REGION=us-east-1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME_EXTERNAL=localstack
+    volumes:
+      - ./LocalStack.Setup:/docker-entrypoint-initaws.d/
+      - /tmp/localstack:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock

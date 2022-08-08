@@ -1,0 +1,16 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: statestore.bindings
+spec:
+  type: bindings.aws.dynamodb
+  version: v1
+  metadata:
+  - name: table
+    value: "statestore"
+  - name: region
+    value: us-east-1
+  - name: accessKey
+    value: test
+  - name: secretKey
+    value: test
