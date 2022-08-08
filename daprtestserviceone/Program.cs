@@ -1,12 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Adds dapr to the service controllers.
 builder.Services.AddControllers().AddDapr();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Adds swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Adds the dapr client so you can inject it into your services.
 builder.Services.AddDaprClient();
 
 var app = builder.Build();

@@ -5,15 +5,17 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Adds swagger.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Dapr will send serialized event object vs. being raw CloudEvent
+// Adds cloud events to deserialise the payloads coming from dapr in the cloud events format.
+// You can read more about it in this repo:https://github.com/cloudevents/spec/tree/v1.0
 app.UseCloudEvents();
 
-// needed for Dapr pub/sub routing
+// This sets up the pub/sub routing for the services.
 app.MapSubscribeHandler();
 
 if (app.Environment.IsDevelopment()) 
@@ -29,9 +31,14 @@ var summaries = new[]
 };
 
 const string STATE_STORE_NAME = "statestore";
+const string PUBSUB_NAME = "pubsub";
 
-// Dapr subscription in [Topic] routes orders topic to this route
-app.MapPost("/forecast", [Topic("pubsub", "forecast")] (List<WeatherForecast> weatherForecast) => {
+/// <summary>
+/// This endpoint serves as a webhook endpoint for dapr to send requests to when it receives pub/sub events.
+/// It will listen on the pubsub service with the name as set in PUBSUB_NAME on the topic forecast.
+/// This endpoint just logs the data when received.
+/// </summary>
+app.MapPost("/forecast", [Topic(PUBSUB_NAME, "forecast")] (List<WeatherForecast> weatherForecast) => {
 
     foreach (var forecast in weatherForecast)
     {
@@ -42,6 +49,13 @@ app.MapPost("/forecast", [Topic("pubsub", "forecast")] (List<WeatherForecast> we
 })
 .WithName("RecieveWeatherForecast");
 
+
+/// <summary>
+/// This endpoint allows you to send the city and receive the generated weather forecast for that city.
+/// It will check the state to see if it already has data for that city then return it if it does.
+/// If it does not have data for the city it will generate it, save it in the state and return it.
+/// This endpoint is called by dapetestserviceone when getting the forecast data.
+/// </summary>
 app.MapPost("/weatherforecast", async ([FromBody]string city) =>
 {
     using var client = new DaprClientBuilder().Build();
