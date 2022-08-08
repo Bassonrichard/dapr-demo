@@ -9,6 +9,7 @@
     <DockerServiceName>daprtestclient</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docker-compose.localstack.yml" />
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>

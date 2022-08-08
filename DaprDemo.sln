@@ -9,6 +9,37 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "daprtestserviceone", "daprt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "daprtestservicetwo", "daprtestservicetwo\daprtestservicetwo.csproj", "{B68887B3-A703-4A89-88F3-57255B518CAE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{653D217A-9DF3-429C-9FF3-96561084A1A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{49B17C35-F1B5-470B-B374-C938CE894C98}"
+	ProjectSection(SolutionItems) = preProject
+		components\components\pubsub.yaml = components\components\pubsub.yaml
+		components\components\statestore.yaml = components\components\statestore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components-docker", "components-docker", "{FC4A89C6-E052-47AD-8700-013FE79E7947}"
+	ProjectSection(SolutionItems) = preProject
+		components\components-docker\pubsub.yaml = components\components-docker\pubsub.yaml
+		components\components-docker\statestore.yaml = components\components-docker\statestore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components-docker-localstack", "components-docker-localstack", "{DF3D5819-DE48-4562-97F9-ED31A7AD7703}"
+	ProjectSection(SolutionItems) = preProject
+		components\components-docker-localstack\pubsub.yaml = components\components-docker-localstack\pubsub.yaml
+		components\components-docker-localstack\statestore.yaml = components\components-docker-localstack\statestore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components-rabbitmq", "components-rabbitmq", "{7851EF3D-0980-4DEE-B9A9-D2E43CB49CAD}"
+	ProjectSection(SolutionItems) = preProject
+		components\components-rabbitmq\pubsub.yaml = components\components-rabbitmq\pubsub.yaml
+		components\components-rabbitmq\statestore.yaml = components\components-rabbitmq\statestore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "localstack", "localstack", "{C2CEC188-0CD8-4E7E-8E4E-46271631D602}"
+	ProjectSection(SolutionItems) = preProject
+		LocalStack.Setup\setup.sh = LocalStack.Setup\setup.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +61,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{49B17C35-F1B5-470B-B374-C938CE894C98} = {653D217A-9DF3-429C-9FF3-96561084A1A5}
+		{FC4A89C6-E052-47AD-8700-013FE79E7947} = {653D217A-9DF3-429C-9FF3-96561084A1A5}
+		{DF3D5819-DE48-4562-97F9-ED31A7AD7703} = {653D217A-9DF3-429C-9FF3-96561084A1A5}
+		{7851EF3D-0980-4DEE-B9A9-D2E43CB49CAD} = {653D217A-9DF3-429C-9FF3-96561084A1A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1241D76B-C123-41E2-A45C-035C0478C20A}
