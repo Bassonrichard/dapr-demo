@@ -54,3 +54,4 @@ services:
     hostname: redis
     ports:
       - "6379:6379"
+    command: redis-server --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
