@@ -7,10 +7,17 @@ spec:
   version: v1
   metadata:
     - name: accessKey
-      value: "test"
+      secretKeyRef:
+        name: AWS.accessKey
+        key: AWS.accessKey
     - name: secretKey
-      value: "test"
+      secretKeyRef:
+        name: AWS.secretKey
+        key: AWS.secretKey
     - name: endpoint
-      value: http://localstack:4566
+      value: "http://localstack:4566" # Optional
     - name: region
       value: us-east-1
+
+auth:
+  secretStore: local-secret-store

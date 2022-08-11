@@ -9,10 +9,17 @@ spec:
   - name: table
     value: "statestore"
   - name: accessKey
-    value: "test" # Optional
+    secretKeyRef:
+        name: AWS.accessKey
+        key: AWS.accessKey
   - name: secretKey
-    value: "test" # Optional
+    secretKeyRef:
+        name: AWS.secretKey
+        key: AWS.secretKey
   - name: endpoint
     value: "http://localstack:4566" # Optional
   - name: region
     value: "us-east-1" # Optional
+
+auth:
+  secretStore: local-secret-store
