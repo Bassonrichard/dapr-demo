@@ -27,6 +27,7 @@ services:
     depends_on:
       - daprtestserviceone
     network_mode: "service:daprtestserviceone"
+    restart: unless-stopped
 
   ############################
   # daprtestservicetwo app + Dapr sidecar
@@ -51,7 +52,8 @@ services:
       - "./components/components-docker-localstack/:/components"
     depends_on:
       - daprtestservicetwo
-    network_mode: "service:daprtestservicetwo"    
+    network_mode: "service:daprtestservicetwo"
+    restart: unless-stopped
 
   localstack:
     image: localstack/localstack

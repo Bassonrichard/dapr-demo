@@ -1,0 +1,9 @@
+@startuml
+participant TestServiceOne as TestServiceOne
+participant TestServiceOneDaprSidecar as TestServiceOneDaprSidecar
+
+database Redis as Redis
+
+TestServiceOne -> TestServiceOneDaprSidecar:1) Save state in state store
+TestServiceOneDaprSidecar -> Redis:2) Save state in Redis
+@enduml

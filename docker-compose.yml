@@ -25,6 +25,7 @@ services:
     depends_on:
       - daprtestserviceone
     network_mode: "service:daprtestserviceone"
+    restart: unless-stopped
 
   ############################
   # daprtestservicetwo app + Dapr sidecar
@@ -48,6 +49,7 @@ services:
     depends_on:
       - daprtestservicetwo
     network_mode: "service:daprtestservicetwo"
+    restart: unless-stopped
     
   redis:
     image: "redis:alpine"

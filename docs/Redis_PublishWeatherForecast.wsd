@@ -1,0 +1,15 @@
+@startuml
+participant TestServiceOne as TestServiceOne
+participant TestServiceOneDaprSidecar as TestServiceOneDaprSidecar
+
+queue forecast as forecast
+
+participant TestServiceTwoDaprSidecar as TestServiceTwoDaprSidecar
+participant TestServiceTwo as TestServiceTwo
+
+TestServiceOne -> TestServiceOneDaprSidecar:1) Publish forecast 
+TestServiceOneDaprSidecar -> forecast:2) Publish forcast to Redis Queue
+
+TestServiceTwoDaprSidecar -> forecast:3) Check the queue for forecast
+TestServiceTwoDaprSidecar -> TestServiceTwo:4) Picks up forecast
+@enduml

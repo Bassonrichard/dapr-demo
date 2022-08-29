@@ -1,0 +1,28 @@
+@startuml
+participant TestServiceOne as TestServiceOne
+participant TestServiceOneDaprSidecar as TestServiceOneDaprSidecar
+
+database Redis as Redis
+
+participant TestServiceTwoDaprSidecar as TestServiceTwoDaprSidecar
+participant TestServiceTwo as TestServiceTwo
+
+TestServiceOne -> TestServiceOneDaprSidecar:1) Check state store
+TestServiceOneDaprSidecar -> Redis:2) Check redis
+TestServiceOneDaprSidecar -> TestServiceOne:3) Respond with state
+
+TestServiceOne -> TestServiceOneDaprSidecar:4) Call forecast service
+TestServiceOneDaprSidecar -> TestServiceTwoDaprSidecar:5) Call service sidecar
+TestServiceTwoDaprSidecar -> TestServiceTwo:5) Call forecast service
+
+TestServiceTwo -> TestServiceTwoDaprSidecar:6) Check state store
+TestServiceTwoDaprSidecar -> Redis:7) Check Redis
+TestServiceTwoDaprSidecar -> TestServiceTwo:8) Respond with state
+
+TestServiceTwo -> TestServiceTwoDaprSidecar:9) Save state to store
+TestServiceTwoDaprSidecar -> Redis:10) Save state to Redis
+
+TestServiceTwo -> TestServiceTwoDaprSidecar:11) Respond to  test service one
+TestServiceTwoDaprSidecar -> TestServiceOneDaprSidecar:12) Response to test service one
+TestServiceOneDaprSidecar -> TestServiceOne:13) Respond to Weather request
+@enduml
